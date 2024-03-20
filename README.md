@@ -1,4 +1,4 @@
-Exemplo de projeto utilizazndo o design pattern Strategy aplicado ao contexto de cadastro de filmes
+Exemplo de projeto utilizando o design pattern Strategy aplicado ao contexto de cadastro de filmes
 
 Projeto implemento utilizando o C#, com um projeto de Asp.Net Core Web Api + Projetos complementares de Class library
 A arquitetura foi organizada em camadas com as principais estruturas como Api, Infrastructure e Domain
