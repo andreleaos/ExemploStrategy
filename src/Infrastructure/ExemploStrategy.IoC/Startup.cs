@@ -18,7 +18,7 @@ public static class Startup
         services.AddSingleton<IFilmeService, FilmeService>();
 
         services.AddSingleton<GetAllFilmeStrategy>();
-        services.AddSingleton<GetByIdFilmeStrategy>();
+        services.AddSingleton<GetFilmeByIdStrategy>();
         services.AddSingleton<CreateFilmeStrategy>();
         services.AddSingleton<UpdateFilmeStrategy>();
         services.AddSingleton<DeleteFilmeStrategy>();
@@ -28,7 +28,7 @@ public static class Startup
             return new Dictionary<Type, IExemploStrategy>
             {
                 { typeof(GetAllFilmeRequest), provider.GetService<GetAllFilmeStrategy>() },
-                { typeof(GetFilmeByIdRequest), provider.GetService<GetByIdFilmeStrategy>() },
+                { typeof(GetFilmeByIdRequest), provider.GetService<GetFilmeByIdStrategy>() },
                 { typeof(CreateFilmeRequest), provider.GetService<CreateFilmeStrategy>() },
                 { typeof(UpdateFilmeRequest), provider.GetService<UpdateFilmeStrategy>() },
                 { typeof(DeleteFilmeRequest), provider.GetService<DeleteFilmeStrategy>() }

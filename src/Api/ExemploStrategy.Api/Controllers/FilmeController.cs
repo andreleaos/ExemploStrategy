@@ -46,7 +46,7 @@ namespace ExemploStrategy.Api.Controllers
             try
             {
                 GetFilmeByIdRequest request = new GetFilmeByIdRequest() { Id = id };
-                var result = _context.Execute(request) as GetByIdFilmeResponse;
+                var result = _context.Execute(request) as GetFilmeByIdResponse;
                 if (result.IsSuccess)
                 {
                     var filmeDto = result.Filme;

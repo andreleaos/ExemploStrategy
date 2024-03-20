@@ -6,11 +6,11 @@ using ExemploStrategy.Services.Responses;
 
 namespace ExemploStrategy.Services.Strategies;
 
-public class GetByIdFilmeStrategy : BaseStrategy<GetByIdFilmeResponse>, IExemploStrategy
+public class GetFilmeByIdStrategy : BaseStrategy<GetFilmeByIdResponse>, IExemploStrategy
 {
     private readonly IFilmeService _filmeService;
 
-    public GetByIdFilmeStrategy(IFilmeService filmeService)
+    public GetFilmeByIdStrategy(IFilmeService filmeService)
     {
         _filmeService = filmeService;
     }
@@ -26,7 +26,7 @@ public class GetByIdFilmeStrategy : BaseStrategy<GetByIdFilmeResponse>, IExemplo
                 return WithError($"{nameof(request)} é requerida");
 
             var result = _filmeService.GetById(input.Id);
-            var response = new GetByIdFilmeResponse() { IsSuccess = true, Filme = result };
+            var response = new GetFilmeByIdResponse() { IsSuccess = true, Filme = result };
             return response;
         }
         catch (Exception ex)

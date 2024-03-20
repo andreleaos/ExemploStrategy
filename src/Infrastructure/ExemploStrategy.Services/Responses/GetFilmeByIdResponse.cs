@@ -2,7 +2,7 @@
 
 namespace ExemploStrategy.Services.Responses;
 
-public class GetByIdFilmeResponse : BaseResponseExemploStrategy
+public class GetFilmeByIdResponse : BaseResponseExemploStrategy
 {
     public FilmeDto Filme { get; set; }
 }
