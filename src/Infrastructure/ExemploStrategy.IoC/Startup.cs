@@ -6,24 +6,45 @@ using ExemploStrategy.Services.Requests;
 using ExemploStrategy.Services.Strategies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace ExemploStrategy.IoC;
 public static class Startup
 {
     public static void Configure(IConfiguration configuration, IServiceCollection services)
     {
-        services.AddSingleton<ExemploStrategyContext>();
+        services.AddScoped<ExemploStrategyContext>();
 
-        services.AddSingleton<IFilmeRepository, FakeFilmeRepository>();
-        services.AddSingleton<IFilmeService, FilmeService>();
+        ConfigureDatabase(configuration, services);
 
-        services.AddSingleton<GetAllFilmeStrategy>();
-        services.AddSingleton<GetFilmeByIdStrategy>();
-        services.AddSingleton<CreateFilmeStrategy>();
-        services.AddSingleton<UpdateFilmeStrategy>();
-        services.AddSingleton<DeleteFilmeStrategy>();
+        var paramEnabledFakeRepository = bool.Parse(configuration.GetSection("EnabledFakeRepository").Value);
 
-        services.AddSingleton((provider) =>
+        if (paramEnabledFakeRepository)
+            services.AddScoped<IFilmeRepository, FakeFilmeRepository>();
+        else
+            services.AddScoped<IFilmeRepository, FilmeRepository>();
+
+        services.AddScoped<IFilmeService, FilmeService>();
+
+        ConfigureStrategies(services);
+    }
+
+    private static void ConfigureDatabase(IConfiguration configuration, IServiceCollection services)
+    {
+        var connStr = configuration.GetConnectionString("filmeDb");
+
+        services.AddScoped<IDbConnection>(provider => new MySqlConnection(connStr));
+    }
+    private static void ConfigureStrategies(IServiceCollection services)
+    {
+        services.AddScoped<GetAllFilmeStrategy>();
+        services.AddScoped<GetFilmeByIdStrategy>();
+        services.AddScoped<CreateFilmeStrategy>();
+        services.AddScoped<UpdateFilmeStrategy>();
+        services.AddScoped<DeleteFilmeStrategy>();
+
+        services.AddScoped((provider) =>
         {
             return new Dictionary<Type, IExemploStrategy>
             {
