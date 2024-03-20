@@ -15,6 +15,7 @@ public class GetFilmeByIdStrategy : BaseStrategy<GetFilmeByIdResponse>, IExemplo
         _filmeService = filmeService;
     }
 
+
     public IExemploStrategyOutput Execute(IExemploStrategyInput request)
     {
         try
